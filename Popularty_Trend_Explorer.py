@@ -166,7 +166,15 @@ if st.button("Check Popularity"):
         font=dict(size=12, color="rgba(255, 255, 255, 0.7)")  
     )
 
-    title = f"Popularity Trend Forecast for '{', '.join(keywords)}' in {selected_country}"
+    keywords = [keyword.capitalize() for keyword in keywords]
+
+    if len(keywords) == 1:
+        title = f"Popularity Trend Forecast for {keywords[0]} ({selected_country})"
+    elif len(keywords) == 2:
+        title = f"Popularity Trend Forecast for {keywords[0]} and {keywords[1]} ({selected_country})"
+    else:
+        title = f"Popularity Trend Forecast for {keywords[0]}, {keywords[1]}, and {keywords[2]} ({selected_country})"
+
     fig.update_layout(title=title)
     st.plotly_chart(fig)
 
