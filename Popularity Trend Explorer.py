@@ -4,14 +4,12 @@ from prophet import Prophet
 import pandas as pd
 import plotly.graph_objects as go
 
-# List of countries and their corresponding country codes
 country_list = [
     ("Worldwide", ""),
     ("United States", "US"),
     ("United Kingdom", "GB"),
     ("India", "IN"),
     ("Canada", "CA")
-    # Add more countries and their codes here
 ]
 
 today = pd.Timestamp.now().strftime("%Y-%m-%d")
@@ -24,7 +22,7 @@ def fit_and_forecast(df):
     return forecast
 
 def plot_trend(fig, df, forecast, keyword, color):
-    # Plot actual data
+    # Actual 
     fig.add_trace(go.Scatter(
         x=df['ds'][df['ds'] <= today],
         y=df['y'][df['ds'] <= today],
@@ -34,7 +32,7 @@ def plot_trend(fig, df, forecast, keyword, color):
         hovertemplate='Date: %{x}<br>Value: %{y}'
     ))
 
-    # Plot forecast data
+    # Forecast
     fig.add_trace(go.Scatter(
         x=forecast['ds'][forecast['ds'] > today],
         y=forecast['yhat'][forecast['ds'] > today],
@@ -44,7 +42,7 @@ def plot_trend(fig, df, forecast, keyword, color):
         hovertemplate='Date: %{x}<br>Value: %{y}'
     ))
 
-    # Plot confidence interval
+    # Confidence interval
     fig.add_trace(go.Scatter(
         x=forecast['ds'][forecast['ds'] > today],
         y=forecast['yhat_upper'][forecast['ds'] > today],
@@ -69,17 +67,13 @@ def plot_trend(fig, df, forecast, keyword, color):
     
     return fig
 
-# Initialize color dictionary
+# Initialize color dictionary for graph
 color_dict = {
     'Keyword1': {'Actual': '#2E86C1', 'Forecast': '#5DADE2', 'ConfidenceInterval': 'rgba(93, 173, 226, 0.3)'},
     'Keyword2': {'Actual': '#BFC9CA', 'Forecast': '#D5DBDB', 'ConfidenceInterval': 'rgba(213, 219, 219, 0.3)'},
     'Keyword3': {'Actual': '#58D68D', 'Forecast': '#7DCEA0', 'ConfidenceInterval': 'rgba(125, 206, 160, 0.3)'}
 }
 
-# Streamlit UI
-# -----------
-
-# Title
 st.title("📈 Popularity Trend Explorer")
 
 st.markdown("""
@@ -97,18 +91,17 @@ With this tool, you can:
 - **Forecasting Model**: Prophet
 """)
 
-# Create columns
 col1, col2 = st.columns(2)
 
-# Number of keywords selector in first column
+# Number of keywords selector
 with col1:
     num_keywords = st.selectbox("Number of Keywords", [1, 2, 3], format_func=lambda x: f"{x} Keyword{'s' if x > 1 else ''}")
 
-# Country selector in the second column
+# Country selector 
 with col2:
     selected_country, selected_country_code = st.selectbox("Country", country_list, format_func=lambda x: x[0])
 
-# Keyword inputs
+# Keywords
 keyword1 = st.text_input("Enter first keyword", "")
 keyword2, keyword3 = "", ""
 if num_keywords >= 2:
@@ -128,7 +121,6 @@ if st.button("Check Popularity"):
     if keyword3:
         keywords.append(keyword3)
     
-    # Include the selected country code in the build_payload method
     pytrends.build_payload(keywords, cat=0, timeframe='today 5-y', geo=selected_country_code, gprop='')
     data = pytrends.interest_over_time()
 
@@ -174,15 +166,14 @@ if st.button("Check Popularity"):
         font=dict(size=12, color="rgba(255, 255, 255, 0.7)")  
     )
 
-    # Update layout and display
     title = f"Popularity Trend Forecast for '{', '.join(keywords)}' in {selected_country}"
     fig.update_layout(title=title)
     st.plotly_chart(fig)
 
-# Remove the last separator to clean up
+# Remove the last separator 
 text_data = text_data.rstrip("|")
 
-# Write to text_data.txt inside the 'text_data' folder
+# Write to text_data.txt 
 with open("text_data/text_data.txt", "w") as f:
     f.write(text_data)
 

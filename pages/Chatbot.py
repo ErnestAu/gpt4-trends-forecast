@@ -9,6 +9,7 @@ try:
 except FileNotFoundError:
     text_data = ""
 
+# Load the selected country
 try:
     with open("text_data/selected_country.txt", "r") as f:
         selected_country = f.read().strip()
@@ -65,7 +66,6 @@ for msg in st.session_state.messages:
     if msg["role"] != "system":
         st.chat_message(msg["role"]).write(msg["content"])
 
-# Input and interaction handling
 if prompt := st.chat_input():
     if not openai_api_key:
         st.info("Please add your OpenAI API key to continue.")
