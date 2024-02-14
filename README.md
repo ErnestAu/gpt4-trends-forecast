@@ -1,5 +1,5 @@
 
-# Popularity Trend Explorer
+# 📈 Popularity Trend Explorer
 
 ## Introduction
 This project is a Streamlit web application that allows users to explore the popularity of keywords over time based on Google Trends data. It provides both historical and forecasted trends for the keywords. Additionally, the app incorporates a chatbot trained to answer questions about the trend data.
@@ -13,7 +13,7 @@ This project is a Streamlit web application that allows users to explore the pop
 ## Installation
 1. **Clone the repository**
    ```
-   git clone https://github.com/ErnestAu/gpt4-trends-forecast
+   git clone https://github.com/ErnestAu/gpt4-trends-forecast 
    ```
 2. **Navigate to the project directory**
    ```
